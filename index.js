@@ -42,7 +42,7 @@ const exec = async () => {
 
   for (const pr of prs) {
     console.log(
-      `Updating the pull request #${pr.number} (${pr.title}) with the base branch ${pr.payload.ref}`
+      `Updating the pull request #${pr.number} (${pr.title}) with the base branch ${pr.base.ref}`
     );
     try {
       await updatePRBranch(pr);
