@@ -36,7 +36,7 @@ const exec = async () => {
   if (!baseBranch)
     throw new Error("You are missing the base branch as parameter");
 
-  const prs = await getOpenedPrs();
+  const prs = await getOpenedPrs(baseBranch);
   let updated = 0;
   let failed = 0;
 
