@@ -13,7 +13,7 @@ const getGithubClient = async () => {
 };
 
 const getOpenedPrs = async (baseBranch) => {
-  const client = await getGihubClient();
+  const client = await getGithubClient();
   const prs = await client.request("GET /repos/{owner}/{repo}/pulls", {
     owner: github.context.payload.repository.owner.name,
     repo: github.context.payload.repository.name,
