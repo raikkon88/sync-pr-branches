@@ -13,7 +13,7 @@ const getOpenedPrs = async (baseBranch) => {
   return prs.data;
 };
 
-const updateWithMaster = async (pr) => {
+const updatePRBranch = async (pr) => {
   await client.request(
     "PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch",
     {
@@ -45,7 +45,7 @@ const exec = async () => {
       `Updating the pull request #${pr.number} (${pr.title}) with the base branch`
     );
     try {
-      await updateWithMaster(pr);
+      await updatePRBranch(pr);
       updated++;
     } catch (err) {
       console.log(
