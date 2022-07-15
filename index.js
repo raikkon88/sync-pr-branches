@@ -49,12 +49,12 @@ const exec = async () => {
       updated++;
     } catch (err) {
       console.log(
-        `The pr ${pr.number} with title "${pr.title}" can't be synched due to ${err.message}`
+        `The pr #${pr.number} with title "${pr.title}" can't be synched due to ${err.message}`
       );
     }
   }
-
-  return `Updated ${updated} pull requests, failed ${failed}`;
+  const result = `Updated ${updated} pull requests, failed ${failed}`;
+  return result;
 };
 
 exec()
