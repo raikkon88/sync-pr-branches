@@ -2,7 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 const showHello = (baseBranch, token) => {
-  console.log(`hello ${target} with ${token}`);
+  console.log(`hello ${baseBranch} with ${token}`);
 };
 
 const exec = async () => {
