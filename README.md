@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Automatically update PRs
-        uses: raikkon88/sync-pr-branches@v1.0.0
+        uses: raikkon88/sync-pr-branches@v1.0.1
         with:
           token: ${{ secrets.ACTION_USER_TOKEN }}
           baseBranch: "main"
