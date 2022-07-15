@@ -1,19 +1,9 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-let githubClient;
-
-const getGithubClient = async () => {
-  if (!githubClient) {
-    const token = core.getInput("token");
-    if (!token) throw new Error("You should provide a personal github token");
-    githubClient = await github.getOctokit(token);
-  }
-  return getGithubClient;
-};
+let client;
 
 const getOpenedPrs = async (baseBranch) => {
-  const client = await getGithubClient();
   const prs = await client.request("GET /repos/{owner}/{repo}/pulls", {
     owner: github.context.payload.repository.owner.name,
     repo: github.context.payload.repository.name,
@@ -24,6 +14,13 @@ const getOpenedPrs = async (baseBranch) => {
 };
 
 const exec = async () => {
+  const token = core.getInput("token");
+  if (!token) throw new Error("You should provide a personal github token");
+
+  client = await github.getOctokit(token);
+  console.log(JSON.stringify(client));
+  if (!client) throw new Error("Invalid personal token");
+
   const baseBranch = core.getInput("baseBranch");
   if (!baseBranch)
     throw new Error("You are missing the base branch as parameter");
