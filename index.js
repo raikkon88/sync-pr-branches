@@ -14,15 +14,15 @@ const getOpenedPrs = async (baseBranch) => {
 };
 
 const updateWithMaster = async (pr) => {
-    await client.request(
-      "PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch",
-      {
-        owner: github.context.payload.repository.owner.name,
-        repo: github.context.payload.repository.name,
-        pull_number: pr.number,
-        expected_head_sha: pr.head.sha,
-      }
-    );
+  await client.request(
+    "PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch",
+    {
+      owner: github.context.payload.repository.owner.name,
+      repo: github.context.payload.repository.name,
+      pull_number: pr.number,
+      expected_head_sha: pr.head.sha,
+    }
+  );
 };
 
 const exec = async () => {
@@ -37,20 +37,22 @@ const exec = async () => {
     throw new Error("You are missing the base branch as parameter");
 
   const prs = await getOpenedPrs();
-  let updated = 0
-  let failed = 0
-  prs.forEach(pr => {
-    console.log(`Updating the pull request #${pr.number} (${pr.title}) with the base branch`)
+  let updated = 0;
+  let failed = 0;
+
+  for (const pr of prs) {
+    console.log(
+      `Updating the pull request #${pr.number} (${pr.title}) with the base branch`
+    );
     try {
-        await updateWithMaster(pr)
-        updatedPrs++
+      await updateWithMaster(pr);
+      updatedPrs++;
+    } catch (err) {
+      console.log(
+        `The pr ${pr.number} with title "${pr.title}" can't be synched due to ${err.message}`
+      );
     }
-    catch(err) {
-        console.log(
-            `The pr ${pr.number} with title "${pr.title}" can't be synched due to ${err.message}`
-          );
-    }
-  })
+  }
 
   return `Updated ${updated} pull requests, failed ${failed}`;
 };
