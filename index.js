@@ -46,7 +46,7 @@ const exec = async () => {
     );
     try {
       await updateWithMaster(pr);
-      updatedPrs++;
+      updated++;
     } catch (err) {
       console.log(
         `The pr ${pr.number} with title "${pr.title}" can't be synched due to ${err.message}`
