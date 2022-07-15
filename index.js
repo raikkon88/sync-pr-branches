@@ -15,5 +15,5 @@ const exec = async () => {
 };
 
 exec()
-  .then((output) => core.setOutput(output))
+  .then((output) => core.setOutput("result", output))
   .catch((err) => core.setFailed(err.message));
