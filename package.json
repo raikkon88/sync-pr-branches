@@ -1,0 +1,20 @@
+{
+  "name": "sync-pr-branches",
+  "version": "1.0.0",
+  "description": "Github action that allows the sync with other branches when master receives a change",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raikkon88/sync-pr-branches.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raikkon88/sync-pr-branches/issues"
+  },
+  "homepage": "https://github.com/raikkon88/sync-pr-branches#readme"
+}

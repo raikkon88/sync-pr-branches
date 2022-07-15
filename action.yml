@@ -1,0 +1,14 @@
+name: "Hello World"
+description: "Update all pull requests branches pointing to a branch when this branch receives a push"
+inputs:
+  baseBranch:
+    description: "The branch that will trigger the sync with the other branches"
+    required: true
+    default: ""
+  token:
+    description: "The personal access token used by the github action"
+    required: true
+    default: ""
+runs:
+  using: "node16"
+  main: "index.js"
