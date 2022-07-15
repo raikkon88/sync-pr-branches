@@ -13,22 +13,46 @@ const getOpenedPrs = async (baseBranch) => {
   return prs.data;
 };
 
+const updateWithMaster = async (pr) => {
+    await client.request(
+      "PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch",
+      {
+        owner: github.context.payload.repository.owner.name,
+        repo: github.context.payload.repository.name,
+        pull_number: pr.number,
+        expected_head_sha: pr.head.sha,
+      }
+    );
+};
+
 const exec = async () => {
   const token = core.getInput("token");
   if (!token) throw new Error("You should provide a personal github token");
 
   client = await github.getOctokit(token);
-  console.log(JSON.stringify(client));
-  if (!client) throw new Error("Invalid personal token");
+  if (!client) throw new Error("Invalid personal access token");
 
   const baseBranch = core.getInput("baseBranch");
   if (!baseBranch)
     throw new Error("You are missing the base branch as parameter");
 
   const prs = await getOpenedPrs();
-  console.log(prs);
+  let updated = 0
+  let failed = 0
+  prs.forEach(pr => {
+    console.log(`Updating the pull request #${pr.number} (${pr.title}) with the base branch`)
+    try {
+        await updateWithMaster(pr)
+        updatedPrs++
+    }
+    catch(err) {
+        console.log(
+            `The pr ${pr.number} with title "${pr.title}" can't be synched due to ${err.message}`
+          );
+    }
+  })
 
-  return "action finished";
+  return `Updated ${updated} pull requests, failed ${failed}`;
 };
 
 exec()
